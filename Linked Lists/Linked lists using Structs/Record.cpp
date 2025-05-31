@@ -4,105 +4,97 @@ using namespace std;
 struct Record{
     int rollno;
     float GPA;
-    Record *next=NULL;
+    Record *next = NULL;
 };
-// Record* head=NULL;
+
 void insert(Record*(&head),int inp1,float inp2){
-    Record* ptr=(Record*)malloc(sizeof(Record));
+    Record * ptr = new Record;
     Record *curr=head;
     if(head==NULL){
         ptr->rollno=inp1;
         ptr->GPA=inp2;
         ptr->next=NULL;
         head=ptr;
-    //     cout<<head->rollno<<endl;
-    //    cout<<head->GPA<<endl;
-        // cout<<"head is null";
+
     }
     else{
         while(curr->next!=NULL){
             curr=curr->next;
-            // cout<<"hi";
         }
-        if(curr->next==NULL){
             ptr->rollno=inp1;
             ptr->GPA=inp2;
             ptr->next=NULL;
             curr->next=ptr;
-            // cout<<"hi";
-            // cout<<curr->next->rollno;
-            // cout<<curr->next->GPA;
-        }
     }
-    // int arr[r];
-    // arr[r]={};
 }  
 
 // Search Function
 
-void Search(Record*(&head),int rollno){
-        Record *curr=head;
-        // if(curr==NULL){
-        //     cout<<"Record is empty";
-        // }
+void search(Record*(&head),int rollno){
+    if (head == NULL){
+        cout<<"Record is Empty!"<<endl;
+        return ;
+    }
+    Record *curr=head;
+    while(curr!=NULL){
         if(curr->rollno==rollno){
             cout<<"Your CGPA is: "<<curr->GPA<<endl;
+            return;
         }
-        else if(curr->rollno!=rollno){
-            while(curr!=NULL){
-                curr=curr->next;
-                if(curr->rollno==rollno){
-                    cout<<"Your CGPA is: "<<curr->GPA<<endl;
-                    break;
-                }
-        if(curr->next==NULL){
-        cout<<"Record Not Found!"<<endl;
-        break;
-        }
-            }
-        }
+        curr=curr->next;
+    }
+    cout<<"Record Not Found!"<<endl;
+        
 }
-void Print(Record*(&head)){
+void print(Record*(&head)){
+    if (head == NULL){
+        cout<<"Record is Empty!"<<endl;
+        return ;
+    }
     Record* curr=head;
-    // if(curr==NULL){
-    //     cout<<"Record is empty"<<endl;
-    // }
-    // else{
         while(curr!=NULL){
             cout<<"Your Roll No. is: "<<curr->rollno<<" And your GPA is: "<<curr->GPA<<endl;
             curr=curr->next;
         }   
-    // }
 }
 // Delete Function
 
-void Delete(Record*(&head),int rollno){
-        Record *curr=head;
-        Record* pre;
-        // if(curr==NULL){
-        //     cout<<"Record is empty"<<endl;
-        // }
-        if(curr->rollno==rollno){
-        // cout<<"Your CGPA is: "<<curr->GPA<<endl;
-        head=curr->next;
-        pre=NULL;
+void deleteRecord(Record*(&head),int rollno){
+    if (head == NULL){
+        cout<<"Record is Empty!"<<endl;
+        return ;
+    }
+    Record *curr=head;
+    Record* pre = NULL ;
+    if(head->rollno==rollno){
+    head= head -> next;
+    free(curr);
+    }
+    else if( (curr-> next) != NULL && (curr->next)->rollno == rollno ){
+        curr=curr->next;
+        head -> next = curr -> next;
         free(curr);
     }
     else{
-        while(curr->rollno!=rollno){
+        while((curr )!= NULL && (curr )->rollno!=rollno){
             pre=curr;
             curr=curr->next;
         }
-        if(curr->rollno==rollno){
-            pre->next=curr->next;
-            free(curr);
-            // cout<<"Your CGPA is: "<<curr->GPA<<endl;
+        if(curr == NULL){
+            cout<<"Record Not Found!"<<endl;
+            return;
         }
+        pre->next=curr->next;
+        free(curr);
     }
 }
 
 // Delete Record
-void Deleterecord(Record*(&head)){
+void deleteAllRecords(Record*(&head)){
+    if (head == NULL){
+        cout<<"Record is Empty!"<<endl;
+        return ;
+    }
     Record*curr=head;
     while(head!=NULL){
         free(head);
@@ -111,26 +103,10 @@ void Deleterecord(Record*(&head)){
         }
 }
 int main(){
-    Record *head=NULL;int i;
-        i=10;
-        while( i!=0 ){
-        if(head==NULL){
-            cout<<"You can't Search,Print and delete Record as Record is empty."<<endl;
-            cout<<"Press 0 to exit"<<endl;
-            cout<<"Press 1 to insert value"<<endl;
-            cin>>i;
-            if(i==1){
-            int inp1;
-            float inp2;
-            cout<<"Enter Roll NO:";
-            cin>>inp1;           
-            cout<<"Enter CGPA:";
-            cin>>inp2;
-            // cout<<endl<<head<<endl;
-            insert(head,inp1,inp2);           
-        }
-        }
-        else{
+    Record *head=NULL;
+        // i=10;
+        while(true){
+        int i;
         cout<<"Press 0 to exit"<<endl;
         cout<<"Press 1 to insert value"<<endl;
         cout<<"Press 2 to search value"<<endl;
@@ -145,31 +121,36 @@ int main(){
             cin>>inp1;           
             cout<<"Enter CGPA:";
             cin>>inp2;
-            // cout<<endl<<head<<endl;
             insert(head,inp1,inp2);           
         }
         else if(i==2){
             cout<<"Enter Roll No:";
             int rollno;
             cin>>rollno;
-            Search(head,rollno);
+            search(head,rollno);
         }
         else if(i==3){
-            Print(head);
+            print(head);
         }
         else if(i==4){
             cout<<"Enter Roll No:";
             int rollno;
             cin>>rollno;
-            Delete(head,rollno);
+            deleteRecord(head,rollno);
         }
         else if(i==5){
-            Deleterecord(head);
+            deleteAllRecords(head);
         }
-   }
+        else if( i == 0 ) {
+            cout<<"Exit";
+            break;
+        }
+        else{
+            cout<<"Wrong Input!"<<endl;
+        }
+    }
 }
-cout<<"Exit";
-}
+
 
 
 
