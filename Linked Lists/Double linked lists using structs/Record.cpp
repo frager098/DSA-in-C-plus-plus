@@ -85,7 +85,6 @@ void deleteSingleRecord(Record**head){
                     return;
                 }
                 else{
-                    cout<<"Hi";
                     (curr -> pre) -> next = NULL;
                     delete(curr); 
                     return;
