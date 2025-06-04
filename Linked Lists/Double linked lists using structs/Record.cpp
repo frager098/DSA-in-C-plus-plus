@@ -42,9 +42,9 @@ void search(Record**head){
         cout<<"Your GPA is:"<<curr->GPA<<endl;
     }
     else{
-        while(curr!=NULL){
+        while(curr -> next !=NULL){
             curr=curr->next;
-            if(curr != NULL && curr->rollno==rollno){
+            if(curr->rollno==rollno){
                 cout<<"Your GPA is:"<<curr->GPA<<endl;
                 return;
             }
@@ -59,42 +59,22 @@ void deleteSingleRecord(Record**head){
     }
     Record* curr=*head;cout<<"Enter roll no. you wanna delete:";
     int rollno;cin>>rollno;
-    if(curr->rollno==rollno){
-        if(curr -> next != NULL){
-            (*head)=curr->next;
-            (*head)->pre=NULL;
-            delete(curr);
-            cout<<"Record deleted Successfully"<<endl;
-            return;
-        }
-        else{
-            delete(*head);
-            *head = NULL ;
-            return;
-
-        }
-    }
-    else{ 
-        while(curr ->next !=NULL){
-            curr=curr->next;
-            if(curr->rollno == rollno){
-                if(curr -> next != NULL){
-                    (curr->pre)->next=curr->next;
-                    delete(curr);
-                    cout<<"Record deleted Successfully"<<endl;
-                    return;
-                }
-                else{
-                    (curr -> pre) -> next = NULL;
-                    delete(curr); 
-                    return;
-                }
+    while(curr != NULL){
+        if(curr -> rollno == rollno){
+            if(curr->pre!= NULL){
+                (curr -> pre) -> next = curr -> next;
             }
+            else (*head) = curr -> next;
+                if(curr -> next != NULL) (curr -> next) -> pre = curr -> pre ;
+                delete(curr);
+                cout << "Record deleted successfully" << endl;
+                return;    
         }
+        curr = curr -> next;
     }
     cout<<"Record Not Found!"<<endl;
-
 }
+
 void print(Record**head){
     if(*head == NULL){
         cout<<"Records are empty"<<endl;
@@ -121,7 +101,6 @@ void deleteAllRecords(Record**head){
         delete(curr);
         curr = (*head);
     }
-    delete(*head);
     cout<<"All Records are deleted Successfully"<<endl;
 }
 int main(){
