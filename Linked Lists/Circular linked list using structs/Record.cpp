@@ -4,8 +4,8 @@ using namespace std;
 struct Record{
     int rollno;
     float GPA;
-    Record *next=NULL;
-    Record(int r,float g):rollno(r),GPA(g){}
+    Record *next;
+    Record(int r,float g):rollno(r),GPA(g),next(NULL){}
 };
 void insert(Record*(&head),int rollno,float GPA){
     Record * ptr = new Record(rollno,GPA);
@@ -29,7 +29,7 @@ void insert(Record*(&head),int rollno,float GPA){
     }
 }
 // Search Function
-void Search(Record*(&head),int rollno){
+void search(Record*(&head),int rollno){
         if(head==NULL){
             cout<<"Record is empty";
             return;
@@ -47,12 +47,13 @@ void Search(Record*(&head),int rollno){
 
         }
 }
-void Print(Record*(&head)){
-    Record* curr=head;
-    if(curr==NULL){
+void print(Record*(&head)){
+    if(head==NULL){
         cout<<"Record is empty"<<endl;
+        return;
     }
     else{
+        Record* curr=head;
         while(curr->next!=head){
             cout<<"Your Roll No. is: "<<curr->rollno<<" And your GPA is: "<<curr->GPA<<endl;
             curr=curr->next;
@@ -61,156 +62,66 @@ void Print(Record*(&head)){
     }
 }// Delete Function
 
-void Delete(Record*(&head),int rollno){
+void deleteSingleRecord(Record*(&head),int rollno){
+        if(head==NULL){
+            cout<<"Record is empty"<<endl;
+            return;
+        }
         Record *curr=head;
-        Record* pre,*cir;
-        cir=head;
-       while(cir->next!=head){
-            cir=cir->next;
+        Record* pre = NULL;
+        while(curr -> rollno != rollno && curr -> next != head ){
+            pre = curr ;
+            curr = curr -> next ;
         }
-        if(curr->next==head && curr->rollno==rollno){
-            free(head);
-            head=NULL;
-            cout<<"Record has been deleted!"<<endl;
-        }
-        else if(curr->rollno==rollno && curr->next!=head){
-        head=curr->next;
-        cir->next=head;
-        free(curr);
-        cout<<"Record has been deleted!"<<endl;
-        }
-        else if(curr->rollno!=rollno && curr->next!=head){
-            while(curr->next!=cir){
-                pre=curr;
-                curr=curr->next;
-            if(curr->rollno==rollno && curr!=cir){
-                pre->next=curr->next;
-                free(curr);
-                cout<<"Record has been deleted!"<<endl;
-                break;
+        if(curr -> rollno == rollno && curr -> next == head){
+            if(curr == head){
+                delete(curr);
+                head = NULL;
+                cout<<"Record deleted successfully!"<<endl;
+                return;
             }
-            if(curr->next==cir || curr==cir){
-                pre=curr;
-                curr=curr->next;
-                if(curr==cir && curr->rollno!=rollno){
-                cout<<"Record Not Found!"<<endl;  
-                break; 
-                }
-                free(curr);
-                pre->next=head;      
-                cout<<"Record has been deleted!"<<endl;
-                break;
-                      }
+            pre -> next = curr -> next;
+            delete(curr);
+            cout<<"Record deleted successfully!"<<endl;
+        }
+        else if(curr -> rollno == rollno && curr -> next != head){
+            Record * lastNode = head;
+            while(lastNode->next!=head){
+            lastNode=lastNode->next;
+            } 
+            if(curr == head){
+                head = head -> next;
+                lastNode -> next = head;
+                delete(curr);
+                cout<<"Record deleted successfully!"<<endl;
+                return;
             }
-          
+            pre -> next = curr -> next;
+            delete(curr);
+            cout<<"Record deleted successfully!"<<endl;
+        }
+        else{
+            cout<<"Record Not Found!"<<endl;
         }
 }
-void Deleterecord(Record*(&head)){
-    // Record*curr=head;
-    if(head->next==head){
-    free(head);
-    head=NULL;
+void deleteAllRecords(Record*(&head)){
+     if(head==NULL){
+        cout<<"Record is empty"<<endl;
+        return;
     }
-    else{
-        Record*curr=head->next;
-        head->next=NULL;
-        while(curr!=head){
-            Record* temp=curr;
-            free(temp);
-            temp=NULL;
-            curr=curr->next;
-            cout<<"ok";
-            // temp=curr->next;
-            // temp=NULL;     No need to do that it's local variable although it's a pointer
-        }
-        // free(curr);
-        free(head);
-        head=NULL;
-        
+    Record*curr=head -> next;
+    head -> next = NULL;
+    Record *temp=curr;
+    while(curr != head ){
+        curr = curr -> next ;
+        delete(temp);
+        temp = curr;
     }
+    delete(head);
+    head = NULL ;
+    cout<<"Records deleted successfully!"<<endl;
+
 }
-// void Deleterecord(Record*(&head)) {
-//     if (head == NULL) {
-//         return;//List is empty, nothing to delete
-//     }
-
-//     Record* lastNode = head;
-//     while (lastNode->next != head) {
-//         lastNode = lastNode->next;
-//     }
-
-//     Record* curr = head;
-//     while (curr != lastNode) {
-//         Record* temp = curr;
-//         curr = curr->next;
-//         free(temp);
-//         // cout<<"why";
-//     }
-//     // free(curr);
-//     free(lastNode); // Free the last node
-//     free(head);     // Free the head node
-//     // head = NULL;    // Set head to NULL
-// }
-    // if(head->next!=NULL){
-    // while(curr!=NULL){
-    //     curr=curr->next;
-    //     head=curr;
-    //     free(head);
-    // }
-    // }
-    // while(head!=NULL){
-    //     if(head->next==head){
-    //         free(head);
-    //         head=NULL;    
-    //     }
-    //     else{
-
-        
-    //     }
-    // }
-    // while(head!=NULL){
-    //     free(head);
-    //     curr=curr->next;
-    //     head=curr;
-    //     if(head==NULL){
-    //         break;
-    //     }
-    //     }
-
-// Delete Record
-// void Deleterecord(Record*(&head)){
-//     Record*curr=head;
-//     // if(head->next==head){
-//     //     cout<<"head";
-//     //     curr=curr->next;
-//     //     free(head);
-//     //     free(curr);
-//     // }
-//     // else{
-//     while(curr!=NULL){
-//         if(curr->next==curr){
-//             cout<<"head";
-//             curr=curr->next;
-//             free(head);
-//             head=curr;
-//             // free(curr);
-//             break;
-//         }
-//         else{
-//             cout<<"ok ";
-//             free(head);
-//             curr=curr->next;
-//             head=curr;
-//         // free(head);
-//         // cout<<"h";
-//             if(curr==NULL){
-//                 cout<<"Record has been deleted"<<endl;
-//                 break;
-//             }
-//         }
-//     }
-//     // }
-// }
 int main(){
     Record *head=NULL;int i;
         while( true ){      
@@ -238,19 +149,19 @@ int main(){
             cout<<"Enter Roll No:";
             int rollno;
             cin>>rollno;
-            Search(head,rollno);
+            search(head,rollno);
         }
         else if(i==3){
-            Print(head);
+            print(head);
         }
         else if(i==4){
             cout<<"Enter Roll No:";
             int rollno;
             cin>>rollno;
-            Delete(head,rollno);
+            deleteSingleRecord(head,rollno);
         }
         else if(i==5){
-            Deleterecord(head);      
+            deleteAllRecords(head);      
         }
         else{
             cout<<"Wrong Input!"<<endl;
