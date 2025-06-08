@@ -5,34 +5,53 @@ struct Record{
     int rollno;
     float GPA;
     Record *next=NULL;
+    Record(int r,float g):rollno(r),GPA(g){}
 };
-void insert(Record*(&head),int inp1,float inp2){
-    Record* ptr=(Record*)malloc(sizeof(Record));
-    Record *curr=head;
-        ptr->rollno=inp1;
-        ptr->GPA=inp2;
-        ptr->next=NULL;
-    if(head==NULL){
-        head=ptr;
-        head->next=head;
+void insert(Record*(&head),int rollno,float GPA){
+    Record * ptr = new Record(rollno,GPA);
+    if(head == NULL){
+        head = ptr ;
+        head -> next = head ;
+        return;
     }
     else{
-        while(curr->next!=head){
-            if(curr->rollno==ptr->rollno){
-                break;
-            }
-            curr=curr->next;
+        Record * curr = head;
+        while( curr -> rollno != rollno && curr -> next != head ){
+            curr = curr -> next ;
         }
-        if(curr->next==head && curr->rollno!=ptr->rollno){
-            // curr->next=NULL;
-            ptr->next=head;
-            curr->next=ptr;
+        if(curr -> rollno == rollno){
+            cout<<"Record Already Exists!"<<endl;
+            delete(ptr);
+            return;
         }
-        if(curr->rollno==ptr->rollno){
-                cout<<"Record is already present"<<endl;
-            }
+        curr -> next = ptr ;
+        ptr -> next = head ;
     }
-}  
+}
+// void insert(Record*(&head),int rollno,float GPA){
+//     Record* ptr= new Record(rollno,GPA);
+//     Record *curr=head;
+//     if(head==NULL){
+//         head=ptr;
+//         head->next=head;
+//     }
+//     else{
+//         while(curr->next!=head){
+//             if(curr->rollno==ptr->rollno){
+//                 break;
+//             }
+//             curr=curr->next;
+//         }
+//         if(curr->next==head && curr->rollno!=ptr->rollno){
+//             // curr->next=NULL;
+//             ptr->next=head;
+//             curr->next=ptr;
+//         }
+//         if(curr->rollno==ptr->rollno){
+//                 cout<<"Record is already present"<<endl;
+//             }
+//     }
+// }  
 // Search Function
 void Search(Record*(&head),int rollno){
         Record *curr=head;
@@ -231,26 +250,7 @@ void Deleterecord(Record*(&head)){
 // }
 int main(){
     Record *head=NULL;int i;
-        i=10;
-        while( i!=0 ){
-        if(head==NULL){
-            cout<<"You can't Search,Print and delete Record as Record is empty."<<endl;
-            cout<<"Press 0 to exit"<<endl;
-            cout<<"Press 1 to insert value"<<endl;
-            cin>>i;
-            if(i==1){
-            int inp1;
-            float inp2;
-            cout<<"Enter Roll NO:";
-            cin>>inp1;           
-            cout<<"Enter CGPA:";
-            cin>>inp2;
-            // cout<<endl<<head<<endl;
-            insert(head,inp1,inp2);     
-            cout<<"ok";      
-        }
-        }
-        else{
+        while( true ){      
         cout<<"Press 0 to exit"<<endl;
         cout<<"Press 1 to insert value"<<endl;
         cout<<"Press 2 to search value"<<endl;
@@ -258,14 +258,17 @@ int main(){
         cout<<"Press 4 to delete a Single Record"<<endl;
         cout<<"Press 5 To Delete Whole Record"<<endl;
         cin>>i;
-        if(i==1){
+        if(i==0){
+            cout<<"Exit";
+            return 0;
+        }
+        else if(i==1){
             int inp1;
             float inp2;
             cout<<"Enter Roll NO:";
             cin>>inp1;           
             cout<<"Enter CGPA:";
             cin>>inp2;
-            // cout<<endl<<head<<endl;
             insert(head,inp1,inp2);           
         }
         else if(i==2){
@@ -284,10 +287,10 @@ int main(){
             Delete(head,rollno);
         }
         else if(i==5){
-            Deleterecord(head);
-            
+            Deleterecord(head);      
         }
-   }
-}
-cout<<"Exit";
+        else{
+            cout<<"Wrong Input!"<<endl;
+        }
+    }
 }
