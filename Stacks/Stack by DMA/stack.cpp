@@ -1,17 +1,16 @@
 #include <iostream>
 #include <cstdlib>
 using namespace std;
-struct stack{
+struct Stack{
     int num;
-    stack* next;
+    Stack* next;
+    Stack(int n):num(n),next(NULL){}
 };
-void push(stack** top){
-    stack* ptr = (stack*)malloc(sizeof(stack));
+void push(Stack** top){
     cout<<"Enter Number:";
     int num;
     cin>>num;
-    ptr->num = num;
-    ptr->next = NULL;
+    Stack* ptr = new Stack(num);
     if(*top == NULL){
         *top = ptr;
         cout<<"NULL";
@@ -22,14 +21,22 @@ void push(stack** top){
     }
 }
 
-void pop(stack** top){
-    stack* curr = *top;
+void pop(Stack** top){
+    if(*top == NULL){
+        cout<<"Stack is Empty!"<<endl;
+        return;
+    }
+    Stack* curr = *top;
     *top=curr->next;
-    free(curr);
+    delete(curr);
     }
 
-void print(stack** top){
-    stack* curr=*top;
+void print(Stack** top){
+    if(*top == NULL){
+        cout<<"Stack is Empty!"<<endl;
+        return;
+    }
+    Stack* curr=*top;
     while(curr!=NULL){
         cout<<"Stack: "<<curr->num<<"--->";
         curr=curr->next;
@@ -37,7 +44,7 @@ void print(stack** top){
     cout<<endl;
 }
 int main(){
-    stack* top=NULL;
+    Stack* top=NULL;
     int i ;
     while(true){
         cout<<"Press 0 to exit"<<endl;
