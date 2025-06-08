@@ -52,21 +52,12 @@ void Print(Record*(&head)){
     if(curr==NULL){
         cout<<"Record is empty"<<endl;
     }
-    else if(curr->next==head){
-        cout<<"2nd";
-            cout<<"Your Roll No. is: "<<curr->rollno<<" And your GPA is: "<<curr->GPA<<endl;
-    }
     else{
-        cout<<"3rd";
         while(curr->next!=head){
-        cout<<"4th";
             cout<<"Your Roll No. is: "<<curr->rollno<<" And your GPA is: "<<curr->GPA<<endl;
             curr=curr->next;
-            if(curr->next==head){
-            cout<<"Your Roll No. is: "<<curr->rollno<<" And your GPA is: "<<curr->GPA<<endl;
-            break;
-            } 
         }
+        cout<<"Your Roll No. is: "<<curr->rollno<<" And your GPA is: "<<curr->GPA<<endl;
     }
 }// Delete Function
 
