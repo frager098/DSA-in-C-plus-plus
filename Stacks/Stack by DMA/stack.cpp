@@ -38,14 +38,19 @@ void print(stack** top){
 }
 int main(){
     stack* top=NULL;
-    int i =0;
-    while(i!=4){
-        cout<<"Press 1 to push value in stack: "<<endl;
-        cout<<"Press 2 to pop value in a stack: "<<endl;
-        cout<<"Press 3 to print a stack: "<<endl;
-        cout<<"Press 4 to exit"<<endl;
+    int i ;
+    while(true){
+        cout<<"Press 0 to exit"<<endl;
+        cout<<"Press 1 to push data in stack: "<<endl;
+        cout<<"Press 2 to pop data in a stack: "<<endl;
+        cout<<"Press 3 to print data in a stack: "<<endl;
+        cout<<"Enter:";
         cin>>i;
-        if(i==1){
+        if(i == 0 ){
+            cout<<"Exit!";
+            return 0 ;
+        }
+        else if(i==1){
             push(&top);
         }
         else if(i==2){
@@ -54,8 +59,8 @@ int main(){
         else if(i==3){
           print(&top);
         }
-    }
-    if(i==4){
-        cout<<"exit";
+        else{
+            cout<<"Wrong Input,Try Again!"<<endl;
+        }
     }
 }
