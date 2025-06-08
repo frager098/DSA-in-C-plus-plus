@@ -28,51 +28,23 @@ void insert(Record*(&head),int rollno,float GPA){
         ptr -> next = head ;
     }
 }
-// void insert(Record*(&head),int rollno,float GPA){
-//     Record* ptr= new Record(rollno,GPA);
-//     Record *curr=head;
-//     if(head==NULL){
-//         head=ptr;
-//         head->next=head;
-//     }
-//     else{
-//         while(curr->next!=head){
-//             if(curr->rollno==ptr->rollno){
-//                 break;
-//             }
-//             curr=curr->next;
-//         }
-//         if(curr->next==head && curr->rollno!=ptr->rollno){
-//             // curr->next=NULL;
-//             ptr->next=head;
-//             curr->next=ptr;
-//         }
-//         if(curr->rollno==ptr->rollno){
-//                 cout<<"Record is already present"<<endl;
-//             }
-//     }
-// }  
 // Search Function
 void Search(Record*(&head),int rollno){
-        Record *curr=head;
-        // if(head==NULL){
-        //     cout<<"Record is empty";
-        // }
-        if(head->rollno==rollno){
-            cout<<"Your CGPA is: "<<head->GPA<<endl;
+        if(head==NULL){
+            cout<<"Record is empty";
+            return;
         }
-        else if(head->rollno!=rollno){
-            while(curr->next!=head){
-                curr=curr->next;
-                if(curr->rollno==rollno){
-                    cout<<"Your CGPA is: "<<curr->GPA<<endl;
-                    break;
-                }
-                if(curr->next==head){
-                cout<<"Record Not Found!"<<endl;
-                // break;
-                }
+        else{
+            Record *curr=head;
+            while(curr -> rollno != rollno && curr -> next != head ){
+                curr = curr -> next ;
             }
+            if(curr -> rollno == rollno){
+                cout<<"Your CGPA is: "<<curr->GPA<<endl;
+                return;
+            }
+            cout<<"Record Not Found!"<<endl;
+
         }
 }
 void Print(Record*(&head)){
