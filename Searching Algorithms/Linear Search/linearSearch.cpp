@@ -2,7 +2,7 @@
 using namespace std ;
 void insert(int * arr , int size , int num){
     for(int i = 0 ; i < size ; i++ ){
-        if(arr[i] == -1){
+        if(arr[i] == 0){
             arr[i] = num;
             return;
         }
@@ -21,6 +21,7 @@ void linearSearch(int *arr,int size,int num){
         return;
     }
 }
+
 void print(int * arr,int size){
     cout<<"[";
     for(int i = 0 ; i < size ; i++ ){
@@ -31,15 +32,12 @@ int main(){
     int size , num , inp;
     cout<<"Enter Size of An Array:";
     cin>>size;
-    int * arr = new int[size];
-    for(int i = 0 ; i < size ; i++){
-        arr[i] = -1 ;
-    }
+    int * arr = new int[size]();
    while(true){
     cout<<"Press 0 to Exit"<<endl;
     cout<<"Press 1 to Insert Number in an Array"<<endl;
-    cout<<"Press 2 to Search Number in an Array"<<endl;
-    cout<<"Press 3 to print an Array"<<endl;
+    cout<<"Press 2 to Search Number in an Array Linearly"<<endl;
+    cout<<"Press 4 to print an Array"<<endl;
     cin>>inp;
     if(inp == 0){
         cout<<"Exit"<<endl;
@@ -55,7 +53,7 @@ int main(){
         cin>>num;   
         linearSearch(arr,size,num);
     }
-    else if(inp == 3 ){
+    else if(inp == 4 ){
         print(arr,size);
     }
     else{

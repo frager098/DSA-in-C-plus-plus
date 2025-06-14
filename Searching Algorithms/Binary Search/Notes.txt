@@ -1,0 +1,6 @@
+**Binary Search**
+Binary Search is a searching algorithm that searches for an element by dividing the given data into two halves. Then, it compares data in the middle with the target data and if it's found, ends the execution of the program. In the other two cases if it the data is lesser than the middle one , it considers the first half and discard the second one. Or, if the data is greater than the middle one it considers the second half and discard the first one. These steps are followed until the targeted data is found or the search space is exhausted.
+
+**Conditions To Apply Binary Search**
+1)Access time for each data must be constant(Array provides that).
+2)data must be sorted in ascending order.
