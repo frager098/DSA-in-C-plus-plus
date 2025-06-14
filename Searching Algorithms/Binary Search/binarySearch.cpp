@@ -11,19 +11,18 @@ void insert(int * arr , int size , int num){
 
 void binarySearch(int arr[] ,int size, int num){
     int i1 = 0  ;
-    int i2 = size  ;
     int mid;
     bool flag = false;
-    while( flag != true){
-        mid = (i1 + i2) / 2;
-        if(i1 == mid)flag = true;
+    while( i1 <= size){
+        mid = (i1 + size ) / 2;
+        cout<<"i1 "<<i1<<" mid:"<<mid<<" size:"<<size<<endl;
         if(arr[mid]==num){
             cout<<num<<" Found at Index:"<<mid<<endl;
             return;
         }
         else{
-            if(num < arr[mid])i2 = mid ;
-            else i1 = mid;
+            if(num < arr[mid])size = mid - 1 ;
+            else i1 = mid + 1;
         }
     }
     cout<<"Number Not Found!"<<endl;
@@ -61,7 +60,7 @@ int main(){
     else if(inp == 3 ){
         cout<<"Enter Number You want to Search:";
         cin>>num;   
-        binarySearch(arr,size,num);
+        binarySearch(arr,size - 1 ,num);
     }
     else if(inp == 4 ){
         print(arr,size);
