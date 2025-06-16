@@ -10,13 +10,16 @@ void insert(int * arr , int size , int num){
 }
 void bubbleSort(int * arr ,int size){
   for(int i = 0 ; i < size  ; i++){
+    bool swap = false;//For Optimization from O(n2) to O(n) in the best case scenario when the array is already sorted!
         for(int j = 0 ; j < size - i - 1 ; j++){
             if(arr[j] > arr[j+1]){
                 int temp = arr[j+1];
                 arr[j+1] = arr[j];
-                    arr[j] = temp;
+                arr[j] = temp;
+                swap = true;
                 }
             }
+            if(!swap) return;
         
   }  
 }
